@@ -1,0 +1,145 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4 class="card-title ">Gestion Des Compétences</h4>
+                                <p class="card-category"> Ici vous trouvez la liste des compétences</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group no-border">
+                                    <input type="text" value="" [(ngModel)]="TitreArechercher" class="form-control" placeholder="Chercher par intitule">
+                                    <button mat-raised-button type="submit" (click)="chercherParTitre();" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#addCompetenceModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter Une Compétence</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" *ngIf="PageCompetences.length!=0">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let c of PageCompetences">
+                                    <td>{{c.titre}}</td>
+                                    <td>{{c.description}}</td>
+                                    <td>
+                                        <a href="#EditCompetenceModal" (click)="compForEdit=c"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                        <a href="#deleteCompetenceModal" (click)="compAsupprimer=c.titre" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" *ngIf="PageCompetences.length==0">
+                            <div class="col-md-4">
+                                <div><img height="300px" width="300px" src="./assets/img/noData.png"></div>
+                            </div>
+                            <div class="col-md-5">
+                                <hr style="visibility: hidden">
+                                <hr style="visibility: hidden">
+                                <h2 class="display-5 text-warning" > <b>Rien à afficher !cliquer sur ajouter pour insérer des données</b></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addCompetenceModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ajouter Nouvelle Compétence</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="alert alert-success" role="alert" *ngIf="EtatAjout==1">
+                la compétence est ajoutée avec succée
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==2">
+                Cette compétence existe déja, réessayer!!!
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==3">
+                s'il vs plait ! tous les champs sont obligatoires
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" class="form-control" [(ngModel)]="comp.titre" >
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" [(ngModel)]="comp.description" >
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+                <input type="submit" (click)="ajouterCompetence()" class="btn btn-success" value="Add">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="EditCompetenceModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modifier La compétence</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" class="form-control"  [(ngModel)]="compForEdit.titre" >
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control"  [(ngModel)]="compForEdit.description" >
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseUpdate>
+                <input type="submit" (click)="ModifierCompetence()" class="btn btn-success" value="Modifier">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="deleteCompetenceModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Supprimer Compétence</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button"  class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseDelete>
+                    <input type="submit" (click)="supprimerCompetence()" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

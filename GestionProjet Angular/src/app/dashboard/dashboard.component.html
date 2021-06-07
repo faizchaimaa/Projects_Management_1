@@ -1,0 +1,111 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">content_copy</i>
+                      </div>
+                      <p class="card-category">projets realisés</p>
+                      <h3 class="card-title">0/{{ListProjet.length}}
+                      </h3>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons text-danger">warning</i>
+                          <a href="javascript:void(0)">Voir plus d'infos</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-success card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">store</i>
+                      </div>
+                      <p class="card-category">Revenue</p>
+                      <h3 class="card-title">$00,000</h3>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons">date_range</i> dernier 24 heures
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">info_outline</i>
+                      </div>
+                      <p class="card-category">Collaborateurs</p>
+                      <h3 class="card-title">{{ListCollab.length}}</h3>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats">
+                          <i class="material-icons text-danger">warning</i>
+                          <a href="javascript:void(0)">Voir plus d'infos</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-6 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-warning">
+                      <h4 class="card-title">Liste Collaborateurs</h4>
+                      <p class="card-category">Informations Collaborateurs</p>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning">
+                              <th>ID</th>
+                              <th>Nom</th>
+                              <th>Prénom</th>
+                              <th>Matricule</th>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let col of ListCollab">
+                                  <td>{{col.id}}</td>
+                                  <td>{{col.nom}}</td>
+                                  <td>{{col.prenom}}</td>
+                                  <td>{{col.matricule}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Liste Projets</h4>
+                      <p class="card-category">Informations Projets</p>
+                  </div>
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover">
+                          <thead class="text-warning">
+                          <th>ID</th>
+                          <th>Intitule</th>
+                          <th>Date Debut</th>
+                          <th>Date Fin</th>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let pr of ListProjet">
+                              <td>{{pr.id}}</td>
+                              <td>{{pr.intitule}}</td>
+                              <td>{{pr.datedebut}}</td>
+                              <td>{{pr.datefin}}</td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

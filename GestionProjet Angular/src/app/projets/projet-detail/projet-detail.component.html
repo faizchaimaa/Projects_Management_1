@@ -1,0 +1,386 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Information Projet </h4>
+                       <!-- <p class="card-category">plus d'information sur le Projet</p> -->
+                    </div>
+                    <div class="card-body">
+
+                                <hr style="visibility: hidden">
+                                <div class="row">
+                                    <div class="col-md-5 ">
+                                        <h5 class="font-weight-bold"><b>Intitule Projet:</b></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h5>{{projet.intitule}}</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h5 class="font-weight-bold"><b>Date de Début :</b></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h5>{{projet.datedebut}}</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h5 class="font-weight-bold"><b>Date De Fin :</b></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h5>{{projet.datefin}}</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h5 class="font-weight-bold"><b>Durée du projet:</b></h5>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <h5>{{projet.volumehoraire}}</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                        <!--- -->
+                        <!--   -->
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+            <!--   <div class="row">
+                   <div class="card">
+                       <div class="card-header card-header-primary">
+                           <h4 class="card-title">Statistique Projet </h4>
+                       </div>
+
+
+                       <div class="card-body">
+                           <div class="row text-center">
+                               <div class="col-4 border-right pb-4 pt-4">
+                                   <label class="mb-0 font-13">Total Project</label>
+                                   <h4 class="font-30 font-weight-bold text-col-blue counter">42</h4>
+                               </div>
+                               <div class="col-4 border-right pb-4 pt-4">
+                                   <label class="mb-0 font-13">On Going</label>
+                                   <h4 class="font-30 font-weight-bold text-col-blue counter">23</h4>
+                               </div>
+                               <div class="col-4 pb-4 pt-4">
+                                   <label class="mb-0 font-13">Pending</label>
+                                   <h4 class="font-30 font-weight-bold text-col-blue counter">8</h4>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="table-responsive">
+                           <table class="table table-striped table-vcenter mb-0">
+                               <tbody>
+                               <tr>
+                                   <td>
+                                       <div class="clearfix">
+                                           <div class="float-left"><strong>35%</strong></div>
+                                           <div class="float-right"><small class="text-muted">Design Team</small></div>
+                                       </div>
+                                       <div class="progress progress-xs">
+                                           <div class="progress-bar bg-azure" role="progressbar" style="width: 35%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td>
+                                       <div class="clearfix">
+                                           <div class="float-left"><strong>25%</strong></div>
+                                           <div class="float-right"><small class="text-muted">Developer Team</small></div>
+                                       </div>
+                                       <div class="progress progress-xs">
+                                           <div class="progress-bar bg-green" role="progressbar" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+
+
+                   </div>
+               </div>-->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title">l'Equipe du Projet </h4>
+                        </div>
+                        <div class="card-body"><div class="row text-center text-lg-left">
+                            <div class="col-lg-3 col-md-4 col-6" *ngFor="let collabT of ListEquipeProjet">
+                                <a href="#" class="d-block mb-4 h-100">
+                                    <img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                                    <h4>{{collabT.prenom}} {{collabT.nom}}</h4>
+                                </a>
+                            </div>
+                        </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4 class="card-title">Liste des taches :</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group no-border">
+                                    <input type="text" value="" [(ngModel)]="IntituleArechercher" class="form-control" placeholder="Chercher par intitule">
+                                    <button mat-raised-button type="submit" (click)="chercherParIntitule();" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <p class="card-category">plus d'information sur le Projet</p> -->
+                            <div class="col-md-4">
+                                <a href="#addTacheModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter Tache</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <!--- -->
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                        <th>
+                                            la Tache
+                                        </th>
+                                        <th>
+                                            Date Debut
+                                        </th>
+                                        <th>
+                                            Date Fin
+                                        </th>
+                                        <th>
+                                            Horaire
+                                        </th>
+                                        <th>
+                                            Actions
+                                        </th>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let t of listTache">
+                                            <td>{{t.intitule}}</td>
+                                            <td>{{t.datedebut}}</td>
+                                            <td>{{t.datefin}}</td>
+                                            <td>{{t.volumehoraire}}</td>
+                                            <td>
+                                                <a href="#editTacheModal" (click)="tache=t;prepareModification(t.id);" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                                <a  href="#deleteTacheModal" (click)="tacheAsupprimer=t.intitule ;tache=t" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                                <a  href="#detailTacheModal" (click)="tachePlusInfo=t;afficheCompetencesTache(t.id);" class="delete" data-toggle="modal"><button class="btn btn-primary" data-toggle="tooltip" >View</button></a>
+
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                        <!--   -->
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addTacheModal" class="modal fade" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ajouter une Tache</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==2">
+                l'intitule existe déja, réessayer!!!
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==3">
+                s'il vs plait ! tous les champs sont obligatoires
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Intitule</label>
+                    <input type="text" class="form-control"  [(ngModel)]="tache.intitule">
+                </div>
+                <div class="form-group">
+                    <label>Date Debut de la Tache</label>
+                    <input type="date" class="form-control" [(ngModel)]="tache.datedebut" >
+                </div>
+                <div class="form-group">
+                    <label>Volume Horaire</label>
+                    <input type="number" class="form-control" [(ngModel)]="tache.volumehoraire">
+                </div>
+                <div class="form-group">
+                    <label>Nombre des collaborateurs</label>
+                    <input type="number" class="form-control" [(ngModel)]="tache.nombrecollaborateurs">
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>liste Compétences</mat-label>
+                        <mat-select [formControl]="CompForms" multiple style="position: relative">
+                            <mat-option *ngFor="let t of listComp" [value]="t">{{t.titre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+                <input type="submit" (click)="ajouterTache()" class="btn btn-success" value="Add">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="editTacheModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modifier la tache</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Intitule</label>
+                    <input type="text" class="form-control"  [(ngModel)]="tache.intitule">
+                </div>
+                <div class="form-group">
+                    <label>Date Debut de la Tache</label>
+                    <input type="date" class="form-control" [(ngModel)]="tache.datedebut" >
+                </div>
+                <div class="form-group">
+                    <label>Volume Horaire</label>
+                    <input type="number" class="form-control" [(ngModel)]="tache.volumehoraire">
+                </div>
+                <div class="form-group">
+                    <label>Nombre des collaborateurs</label>
+                    <input type="number" class="form-control" [(ngModel)]="tache.nombrecollaborateurs">
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>liste Compétences</mat-label>
+                        <mat-select [formControl]="CompFormsForEdit" multiple style="position: relative">
+                            <mat-option *ngFor="let t of listComp" [value]="t">{{t.titre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseUpdate>
+                <input type="submit" (click)="modifierTache(tache.id)" class="btn btn-success" value="Modifier">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="deleteTacheModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Supprimer Tache</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Voulez vous vraiment le supprimer??</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button"  class="btn btn-default" data-dismiss="modal" value="Cancel"#CloseDelete>
+                    <input type="submit" (click)="supprimerTache()"  class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!---- affichage détail tache---->
+<div id="detailTacheModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Information sur la tache: {{tachePlusInfo.intitule}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <hr style="visibility: hidden">
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <h5 class="font-weight-bold"><b>Intitule Tache:</b></h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>{{tachePlusInfo.intitule}}</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5 class="font-weight-bold"><b>Date de Début :</b></h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>{{tachePlusInfo.datedebut}}</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5 class="font-weight-bold"><b>Date De Fin :</b></h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>{{tachePlusInfo.datefin}}</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5 class="font-weight-bold"><b>Durée de la tache:</b></h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5>{{tachePlusInfo.volumehoraire}}</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5 class="font-weight-bold"><b>Liste des compétences</b></h5>
+                    </div>
+                    <div class="col-md-5">
+                        <ul>
+                            <li *ngFor="let compTache of ListCompetencesTache">{{compTache.competence.titre}}</li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseUpdate>
+            </div>
+        </div>
+    </div>
+</div>

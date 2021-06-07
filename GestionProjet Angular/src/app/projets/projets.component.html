@@ -1,0 +1,205 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-warning">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4 class="card-title ">Gestion Des Projets</h4>
+                                <p class="card-category"> informations projets</p>
+                            </div>
+                            <div class="col-md-2">
+                                <mat-form-field>
+                                    <!--<mat-label>Rachercher Par:</mat-label>-->
+                                    <mat-select [(value)]="TypeRecherche">
+                                        <mat-option value="numProjet">Numéro</mat-option>
+                                        <mat-option value="Intitule">intitule</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group no-border" *ngIf="TypeRecherche=='numProjet'">
+                                    <input type="text" value="" [(ngModel)]="numProjetArechercher" class="form-control" placeholder="Chercher Par numéro">
+                                    <button mat-raised-button type="submit" (click)="chercherParNumProjet();" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                                <div class="input-group no-border" *ngIf="TypeRecherche=='Intitule'">
+                                    <input type="text" value="" [(ngModel)]="IntituleArechercher" class="form-control" placeholder="Chercher par intitule">
+                                    <button mat-raised-button type="submit" (click)="chercherParIntitule();" class="btn btn-white btn-round btn-just-icon">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#addProjetModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter Un Projet</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" *ngIf="Pageprojets.length!=0">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>
+                                    Intitule
+                                </th>
+                                <th>
+                                    Date Debut
+                                </th>
+                                <th>
+                                    Date Fin
+                                </th>
+                                <th>
+                                    Horaire
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let projet of PageprojetsPag">
+                                    <td (click)="redirectInf(projet.numprojet)" class="btn btn-link">{{projet.intitule}}</td>
+                                    <td>{{projet.datedebut}}</td>
+                                    <td>{{projet.datefin}}</td>
+                                    <td>{{projet.volumehoraire}}</td>
+                                    <td>
+
+                                        <a href="#EditProjetModal" (click)="prjt=projet"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                        <a href="#deleteProjetModal" (click)="prjtAsupprimer=projet.numprojet;prjt=projet" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <button (click)="redirectInf(projet.numprojet)" class="btn btn-success" style="height: 30px;width: 90px">View</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="container">
+                                   <ul class="nav nav-pills">
+                                        <li *ngFor="let ii of pageIndex">
+                                            <a (click)="Pagination(ii)" class="btn btn-link btn-warning" *ngIf="ii!=i">{{ii}}</a>
+                                            <a (click)="Pagination(ii)" class="btn btn-link btn-warning" style="background-color: #c7254e" *ngIf="ii==i">{{ii}}</a>
+
+                                        </li>
+                                   </ul>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="Pageprojets.length==0">
+                            <div class="col-md-4">
+                                <div><img height="300px" width="300px" src="./assets/img/noData.png"></div>
+                            </div>
+                            <div class="col-md-5">
+                                <hr style="visibility: hidden">
+                                <hr style="visibility: hidden">
+                                <hr style="visibility: hidden">
+                                <h2 class="display-3" > <b>S'il vous plait , ajouter des données </b></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addProjetModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ajouter Nouveau Projet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert" *ngIf="EtatAjout==1">
+                    le projet est ajouté avec succée
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==2">
+                    l'intitule ou le numéro de projet existe déja, réessayer!!!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==3">
+                    s'il vs plait ! tous les champs sont obligatoires
+                </div>
+                <div class="form-group">
+                    <label>Numéro de Projet</label>
+                    <input type="number" class="form-control"  [(ngModel)]="prjt.numprojet">
+                </div>
+                <div class="form-group">
+                    <label>Intitule</label>
+                    <input type="text" class="form-control"  [(ngModel)]="prjt.intitule">
+                </div>
+                <div class="form-group">
+                    <label>Date Debut de projet</label>
+                    <input type="date" class="form-control" [(ngModel)]="prjt.datedebut" >
+                </div>
+                <div class="form-group">
+                    <label>Volume horaire</label>
+                    <input type="number" class="form-control" [(ngModel)]="prjt.volumehoraire">
+                </div>
+                <div class="form-group">
+                    <label>Nombre de collaborateurs</label>
+                    <input type="number" class="form-control" [(ngModel)]="prjt.nombrecollaborateurs">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+                <input type="submit" (click)="ajouterProjet()" class="btn btn-success" value="Add">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="EditProjetModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modifier Le Projet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Intitule</label>
+                    <input type="text" class="form-control"  [(ngModel)]="prjt.intitule">
+                </div>
+                <div class="form-group">
+                    <label>Date Debut de projet</label>
+                    <input type="date" class="form-control" [(ngModel)]="prjt.datedebut" >
+                </div>
+                <div class="form-group">
+                    <label>Volume horaire</label>
+                    <input type="text" class="form-control" [(ngModel)]="prjt.volumehoraire">
+                </div>
+                <div class="form-group">
+                    <label>Nombre de collaborateurs</label>
+                    <input type="text" class="form-control" [(ngModel)]="prjt.nombrecollaborateurs">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseUpdate>
+                <input type="submit" (click)="ModifierProjet()" class="btn btn-success" value="Modifier">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteProjetModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Supprimer Projet</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Voulez vous vraiment le supprimer??</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button"  class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseDelete>
+                    <input type="submit" (click)="supprimerProjet(prjtAsupprimer)"  class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

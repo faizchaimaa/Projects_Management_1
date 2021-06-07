@@ -1,0 +1,154 @@
+<div class="main-content">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4 class="card-title ">Gestion Des Collaborateurs</h4>
+                            <p class="card-category"> Informations sur les collaborateurs </p>
+                        </div>
+                        <div class="col-md-2">
+                        <mat-form-field>
+                            <mat-select [(value)]="TypeRecherche" >
+                                <mat-option value="Mat" >Matricule</mat-option>
+                                <mat-option value="Nom">Nom</mat-option>
+                                <mat-option value="NomPr">Nom et prenom</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                        <div class="input-group no-border" *ngIf="TypeRecherche=='Mat'">
+                            <input type="text" value="" [(ngModel)]="matriculeArechercher"  class="form-control" placeholder="Chercher Par matricule">
+                            <button mat-raised-button type="submit" (click)="chercherParMatr();" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                            <div class="input-group no-border" *ngIf="TypeRecherche=='Nom'">
+                                <input type="text" value="" [(ngModel)]="matriculeArechercher" class="form-control" placeholder="Chercher par Nom">
+                                <button mat-raised-button type="submit" (click)="chercherParNom();" class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                            <div class="input-group no-border" *ngIf="TypeRecherche=='NomPr'">
+                                <input type="text" value="" [(ngModel)]="matriculeArechercher" class="form-control" placeholder="Chercher par Nom && Prenom">
+                                <button mat-raised-button type="submit" (click)="chercherParNomPr();" class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#addCollabModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter Collaborateur</span></a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row" *ngIf="PageCollaborateurs.length!=0">
+                            <!-- /.col-lg-3 col-md-4 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let collab of PageCollaborateurs">
+                                    <div class="panel panel-default userlist card" style="background-color:beige;" >
+                                    <div class="panel-body text-center">
+                                        <div class="userprofile">
+                                            <div class="userpic"> <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" class="userpicimg"> </div>
+                                            <h3 class="username">{{collab.nom}} {{collab.prenom}}</h3>
+                                            <p>Marrakech, Maroc</p>
+                                        </div>
+                                        <p><a href="mailto:info@maxartkiller.in">collab@Exemple.com</a></p>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a (click)="rederictedInf(collab.matricule)" class="btn btn-link">Profile</a>
+                                        <a href="#deleteCollabModal" (click)="CollabAsupprimer=collab.matricule" class="btn btn-link pull-right favorite"data-toggle="modal"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    <div class="row" *ngIf="PageCollaborateurs.length==0">
+                        <div class="col-md-4">
+                            <div><img height="300px" width="300px" src="./assets/img/noData.png"></div>
+                        </div>
+                        <div class="col-md-5">
+                            <hr style="visibility: hidden">
+                            <hr style="visibility: hidden">
+                            <hr style="visibility: hidden">
+                            <h2 class="display-5 text-warning" > <b>Rien à afficher !, cliquer sur ajouter pour insérer des données</b></h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="addCollabModal" class="modal fade" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ajouter Nouveau Collaborateur</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==2">
+                cet matricule  existe déja, réessayer!!!
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==3">
+                s'il vs plait ! tous les champs sont obligatoires
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nom du collaborateur</label>
+                    <input type="text" class="form-control"  [(ngModel)]="collab.nom">
+                </div>
+                <div class="form-group">
+                    <label>Prenom du collaborateur</label>
+                    <input type="text" class="form-control" [(ngModel)]="collab.prenom">
+                </div>
+                <div class="form-group">
+                    <label>Matricule</label>
+                    <input type="text" class="form-control" [(ngModel)]="collab.matricule">
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>liste Compétences</mat-label>
+                        <mat-select [formControl]="CompForms" multiple style="position: relative">
+                            <mat-option *ngFor="let t of listComp" [value]="t">{{t.titre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+                <input type="submit" (click)="ajouterCollaborateur()" class="btn btn-success" value="Add">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="deleteCollabModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Supprimer Collaborateur</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Voulez vous vraiment le suuprimer ??</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button"  class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseDelete>
+                    <input type="submit" (click)="supprimerCollab(CollabAsupprimer)"  class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header card-header-warning">
+                            <h4 class="card-title">Les projets </h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="list-group">
+                                <div  *ngFor="let p of Pageprojets">
+                                    <a (click)="AfficheListTache(p)" class="list-group-item active btn-link" *ngIf="estActive==p.intitule">{{p.intitule}}</a>
+                                    <a (click)="AfficheListTache(p)" class="list-group-item " *ngIf="estActive!=p.intitule">{{p.intitule}}</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Taches et Affectation </h4>
+                        <p class="card-category">ici la liste des taches et l'affectation</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>la Tache</th>
+                                <th>Date Debut</th>
+                                <th>nombre Collab</th>
+                                <th>Horaire</th>
+                                <th>List Collaborateurs</th>
+                                <th>Actions</th>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let t of listTache">
+                                    <td>{{t.intitule}}</td>
+                                    <td>{{t.datedebut}}</td>
+                                    <td>{{t.nombrecollaborateurs}}</td>
+                                    <td>{{t.volumehoraire}}</td>
+                                    <td>
+                                        <a href="#CollabAffectés" (click)="affcheListCollabsAffectes(t);AffectationTacheAsupp=t;" class="edit" data-toggle="modal"><button class="btn btn-success" data-toggle="tooltip" value="Affecter">View</button></a>
+                                    </td>
+
+                                    <td>
+                                        <a href="#Affecter" (click)="prepareAffactation(t);tacheAaffecter=t;" class="edit" data-toggle="modal"><button class="btn btn-primary" data-toggle="tooltip" value="Affecter">Affectation</button></a>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- affectation --->
+<div id="Affecter" class="modal fade" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Affecter la tache</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="EtatAjout==2">
+                l'intitule existe déja, réessayer!!!
+            </div>
+            <div class="modal-body">
+                <!----
+                <div class="form-group" *ngFor="let cf of CollabForms.value">
+                   <div class="row">
+                       <div class="col-md-6">
+                           <label>pour le Collab :{{cf.prenom}}</label>
+                       </div>
+                       <div class="col-md-6">
+                               <label>Volume Horaire</label>
+                               <input type="number" value="0" >
+                       </div>
+                   </div>
+
+                </div> --->
+                <div class="alert alert-danger" role="alert" *ngIf="etatAjout==2">
+                    s'il vs plait ! le nombre des collab que tu dois insérer est {{tacheAaffecter.nombrecollaborateurs}}
+                </div>
+                <div class="row text-center text-lg-left">
+                    <div class="col-lg-3 col-md-4 col-6" *ngFor="let collabT of CollabForms.value">
+                        <a href="#" class="d-block mb-4 h-100">
+                            <img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                            <h4>{{collabT.prenom}} {{collabT.nom}}</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-label>Choisissez les Collaborateurs à affecter :</mat-label>
+                        <mat-select [formControl]="CollabForms" multiple style="position: relative">
+                            <mat-option *ngFor="let c of ListCollabAaffect" [value]="c">{{c.prenom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+                <input type="submit" (click)="UpdateAffectation();" class="btn btn-success" value="Affecter">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- liste collaborateurs affectés à une tache --->
+<div id="CollabAffectés" class="modal fade" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Liste collaborateurs affecté à cette tache</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center text-lg-left">
+                    <div class="col-lg-3 col-md-4 col-6" *ngFor="let collabT of ListCollabTache">
+                        <div href="#" class="d-block mb-4 h-100">
+                            <img class="img-fluid img-thumbnail" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                            <h4>{{collabT.prenom}} {{collabT.nom}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" #CloseAdd>
+            </div>
+        </div>
+    </div>
+</div>

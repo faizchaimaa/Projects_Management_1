@@ -1,0 +1,132 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Modifier Profile</h4>
+                        <p class="card-category">Completer Votre Profil</p>
+                    </div>
+                    <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Email address" type="email" [(ngModel)]="collab.email">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Nom" type="text" [(ngModel)]="collab.nom">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prenom" type="text" [(ngModel)]="collab.prenom">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Adresse" type="text" [(ngModel)]="collab.adresse">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Matricule" type="text" [(ngModel)]="collab.matricule">
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field>
+                                        <mat-label>liste Compétences</mat-label>
+                                        <mat-select [formControl]="CompForms" multiple style="position: relative">
+                                            <mat-option *ngFor="let t of listComp" [value]="t">{{t.titre}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="submit" (click)="modifierCollab()" class="btn btn-danger pull-right">Update Profile</button>
+                            <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">
+                            <img class="img" src="https://bootdey.com/img/Content/avatar/avatar6.png" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray">{{collab.nom}} {{collab.prenom}}</h6>
+                        <!--<p class="card-description">
+                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                        </p>
+                        -->
+                       <div style="text-align: left">
+                           <p> <b>Vos Compétences: </b></p>
+                           <ul>
+                               <li *ngFor="let lcc of listCompCollab">{{lcc.titre}}</li>
+                           </ul></div>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-round">Voir Plus</a>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="card">
+                <div class="card-header card-header-warning">
+                    <h4 class="card-title">suivi des tache : </h4>
+                </div>
+                <div class="card-body">
+                    <!--- -->
+                    <div class="table-responsive" *ngIf="listTacheCollab.length!=0">
+                        <table class="table">
+                            <thead class=" text-primary">
+                            <th> la Tache</th>
+                            <th> Date Debut</th>
+                            <th>Date Fin </th>
+                            <th> Nombre d'heures faites</th>
+                            <th>Etat</th>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let t of listTacheCollab">
+                                <td>{{t.intitule}}</td>
+                                <td>{{t.datedebut}}</td>
+                                <td>{{t.datefin}}</td>
+                                <td>{{t.volumehoraire/t.nombrecollaborateurs}}</td>
+                                <td class="btn btn-success">En Cours</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" *ngIf="listTacheCollab.length==0">
+                        <div class="col-md-4">
+                            <div><img height="300px" width="300px" src="./assets/img/noData.png"></div>
+                        </div>
+                        <div class="col-md-5">
+                            <hr style="visibility: hidden">
+                            <hr style="visibility: hidden">
+                            <h2 class="display-5 text-warning" > <b>Rien à afficher !, le collaborateur n'a pas encore commencer des taches</b></h2>
+                        </div>
+                    </div>
+
+                    <!--   -->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
