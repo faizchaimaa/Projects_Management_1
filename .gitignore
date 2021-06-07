@@ -1,0 +1,9 @@
+*.xml
+*.ms
+*.cmd
+mvnw
+.classpath
+.project
+*.js
+*.md
+*.json
